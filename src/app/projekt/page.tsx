@@ -58,6 +58,7 @@ export default function ProjectsPage() {
                   sizes={l.sizes}
                   as="h2"
                   size={"size" in l ? "lg" : "md"}
+                  eager={i === 0}
                 />
               </div>
             );

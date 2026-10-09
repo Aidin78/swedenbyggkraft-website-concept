@@ -184,7 +184,6 @@ export default async function ProjectPage({ params }: PageProps<"/projekt/[slug]
               className={i === 0 ? "col-span-2" : ""}
               sizes={i === 0 ? "(min-width: 1024px) 64vw, 100vw" : "(min-width: 1024px) 32vw, 50vw"}
               caption
-              reveal
             />
           ))}
           {placeholders ? (

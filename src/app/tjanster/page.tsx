@@ -59,7 +59,6 @@ export default function ServicesPage() {
                   photo={s.image}
                   frame={frames[i % frames.length]}
                   sizes="(min-width: 1024px) 56vw, 100vw"
-                  reveal
                 />
               </div>
               <div

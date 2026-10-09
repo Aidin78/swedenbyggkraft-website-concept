@@ -1,9 +1,11 @@
 "use client";
 
-import Image, { type StaticImageData } from "next/image";
+import type { StaticImageData } from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useState } from "react";
+
+import { FadeImage } from "./fade-image";
 
 export type ServiceIndexItem = {
   code: string;
@@ -27,17 +29,14 @@ export function ServiceIndex({ items, headingLevel = "h3" }: { items: ServiceInd
         <div className="sticky top-28">
           <div className="relative aspect-[4/5] overflow-hidden bg-paper-2">
             {items.map((item, i) => (
-              <Image
+              <div
                 key={item.href}
-                src={item.image.src}
-                alt=""
-                fill
-                sizes="(min-width: 1536px) 600px, 40vw"
-                placeholder="blur"
-                className={`object-cover transition-[opacity,transform] duration-700 ease-out-quart ${
+                className={`absolute inset-0 transition-[opacity,transform] duration-700 ease-out-quart ${
                   i === active ? "scale-100 opacity-100" : "scale-[1.04] opacity-0"
                 }`}
-              />
+              >
+                <FadeImage src={item.image.src} alt="" sizes="(min-width: 1536px) 600px, 40vw" />
+              </div>
             ))}
             <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-ink/70 to-transparent p-5 pt-16 text-paper">
               <span className="t-figure text-[4.5rem]" aria-hidden="true">
@@ -58,8 +57,8 @@ export function ServiceIndex({ items, headingLevel = "h3" }: { items: ServiceInd
               onFocus={() => setActive(i)}
               className="group grid grid-cols-[4rem_1fr_auto] items-center gap-x-4 py-4 sm:grid-cols-[3.5rem_1fr_auto] sm:py-5 lg:grid-cols-[3.5rem_1fr_auto] lg:py-6"
             >
-              <span className="relative block size-16 overflow-hidden bg-paper-2 sm:hidden">
-                <Image src={item.image.src} alt="" fill sizes="64px" className="object-cover" />
+              <span className="hover-zoom relative block size-16 overflow-hidden bg-paper-2 sm:hidden">
+                <FadeImage src={item.image.src} alt="" sizes="64px" />
               </span>
               <span
                 className={`t-code hidden self-start pt-1.5 text-lg transition-colors sm:block ${

@@ -1,8 +1,7 @@
 import Link from "next/link";
-import Image from "next/image";
 
 import type { Project } from "@/content/projects";
-import { Reveal } from "./reveal";
+import { FadeImage } from "./fade-image";
 
 type Props = {
   project: Project;
@@ -11,32 +10,39 @@ type Props = {
   /** Heading level inside the surrounding section. */
   as?: "h2" | "h3";
   size?: "lg" | "md";
+  /** Above the fold: load eagerly with high priority. */
+  eager?: boolean;
 };
 
-export function ProjectCard({ project, sizes, frame = "aspect-[4/3]", as: Heading = "h3", size = "md" }: Props) {
+export function ProjectCard({ project, sizes, frame = "aspect-[4/3]", as: Heading = "h3", size = "md", eager = false }: Props) {
   const photo = project.image;
   return (
-    <article className="group relative">
-      <Reveal>
-        <div className={`relative overflow-hidden bg-paper-2 ${frame}`}>
-          <Image
-            src={photo.src}
-            alt={photo.alt}
-            fill
-            sizes={sizes}
-            placeholder="blur"
-            className="object-cover transition-transform duration-[1.2s] ease-out-quart group-hover:scale-[1.035]"
-            style={photo.focus ? { objectPosition: photo.focus } : undefined}
-          />
-          {photo.rendering ? (
-            <span className="t-meta absolute bottom-3 left-3 bg-paper/90 px-2 py-1">Visionsbild</span>
-          ) : null}
-        </div>
-      </Reveal>
+    <article className="hover-zoom group relative">
+      <div className={`relative overflow-hidden bg-paper-2 ${frame}`}>
+        <FadeImage
+          src={photo.src}
+          alt={photo.alt}
+          sizes={sizes}
+          loading={eager ? "eager" : undefined}
+          fetchPriority={eager ? "high" : undefined}
+          style={photo.focus ? { objectPosition: photo.focus } : undefined}
+        />
+        {/* A soft shade that settles over the photo on hover. */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-ink/0 transition-colors duration-700 ease-out-quart group-hover:bg-ink/10"
+        />
+        {photo.rendering ? (
+          <span className="t-meta absolute bottom-3 left-3 bg-paper/90 px-2 py-1">Visionsbild</span>
+        ) : null}
+      </div>
       <div className="mt-4 flex items-start justify-between gap-6 border-t border-ink pt-3">
         <div>
           <Heading className={size === "lg" ? "t-h2" : "t-h3"}>
-            <Link href={`/projekt/${project.slug}`} className="after:absolute after:inset-0">
+            <Link
+              href={`/projekt/${project.slug}`}
+              className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_2px] bg-left-bottom bg-no-repeat pb-0.5 transition-[background-size] duration-500 ease-out-quart group-hover:bg-[length:100%_2px] after:absolute after:inset-0"
+            >
               {project.name}
             </Link>
           </Heading>

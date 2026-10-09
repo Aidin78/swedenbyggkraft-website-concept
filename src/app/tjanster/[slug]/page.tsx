@@ -118,7 +118,6 @@ export default async function ServicePage({ params }: PageProps<"/tjanster/[slug
                       className={wide ? "col-span-2" : i % 2 === 0 ? "sm:mt-16" : ""}
                       sizes={wide ? "(min-width: 1024px) 56vw, 100vw" : "(min-width: 1024px) 28vw, 50vw"}
                       caption
-                      reveal
                     />
                   );
                 })}

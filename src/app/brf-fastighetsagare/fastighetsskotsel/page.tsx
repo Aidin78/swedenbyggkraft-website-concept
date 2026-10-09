@@ -141,7 +141,7 @@ export default function PropertyCarePage() {
                 </p>
                 <p>Vi tar också bort gamla rabatter och förbereder ytor inför ny anläggning.</p>
               </div>
-              <Photo photo={photos.markarbetenGatsten} frame="aspect-[4/3]" sizes="(min-width: 768px) 30vw, 100vw" caption reveal />
+              <Photo photo={photos.markarbetenGatsten} frame="aspect-[4/3]" sizes="(min-width: 768px) 30vw, 100vw" caption />
             </div>
           </section>
 
@@ -154,9 +154,9 @@ export default function PropertyCarePage() {
               gårdar.
             </p>
             <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-5">
-              <Photo photo={photos.tradgardGang} frame="aspect-[4/3]" className="col-span-2 sm:col-span-1" sizes="(min-width: 640px) 32vw, 100vw" caption reveal />
-              <Photo photo={photos.tradgardTrappa} frame="aspect-[4/5]" sizes="(min-width: 640px) 32vw, 50vw" caption reveal />
-              <Photo photo={photos.tradgardEldstad} frame="aspect-[4/5]" className="sm:hidden" sizes="50vw" caption reveal />
+              <Photo photo={photos.tradgardGang} frame="aspect-[4/3]" className="col-span-2 sm:col-span-1" sizes="(min-width: 640px) 32vw, 100vw" caption />
+              <Photo photo={photos.tradgardTrappa} frame="aspect-[4/5]" sizes="(min-width: 640px) 32vw, 50vw" caption />
+              <Photo photo={photos.tradgardEldstad} frame="aspect-[4/5]" className="sm:hidden" sizes="50vw" caption />
             </div>
             <ul className="mt-10 grid gap-x-10 border-t border-ink sm:grid-cols-2">
               {[

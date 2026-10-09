@@ -44,6 +44,12 @@ const serviceLinks = constructionServices.map((s) => ({
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="sv" className={archivo.variable}>
+      <head>
+        {/* Without JavaScript, show photos straight away instead of waiting to fade in. */}
+        <noscript>
+          <style>{"img[data-fade]{opacity:1!important}"}</style>
+        </noscript>
+      </head>
       <body className="flex min-h-svh flex-col antialiased">
         <a
           href="#innehall"

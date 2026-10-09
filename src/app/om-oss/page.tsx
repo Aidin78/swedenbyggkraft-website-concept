@@ -146,8 +146,8 @@ export default function AboutPage() {
             </ul>
           </div>
           <div className="col-span-12 grid grid-cols-2 gap-3 sm:gap-5 lg:col-span-6 lg:col-start-7">
-            <Photo photo={photos.teamArbetsplats} frame="aspect-[4/5]" sizes="(min-width: 1024px) 24vw, 50vw" caption reveal />
-            <Photo photo={photos.teamGrund} frame="aspect-[4/5]" className="mt-16" sizes="(min-width: 1024px) 24vw, 50vw" caption reveal />
+            <Photo photo={photos.teamArbetsplats} frame="aspect-[4/5]" sizes="(min-width: 1024px) 24vw, 50vw" caption />
+            <Photo photo={photos.teamGrund} frame="aspect-[4/5]" className="mt-16" sizes="(min-width: 1024px) 24vw, 50vw" caption />
           </div>
         </div>
       </section>

@@ -1,7 +1,6 @@
-import Image from "next/image";
 
 import type { Photo as PhotoData } from "@/content/photos";
-import { Reveal } from "./reveal";
+import { FadeImage } from "./fade-image";
 
 type Props = {
   photo: PhotoData;
@@ -13,7 +12,6 @@ type Props = {
   caption?: boolean | string;
   /** Above-the-fold image: load eagerly with high priority. */
   preload?: boolean;
-  reveal?: boolean;
 };
 
 /** A cropped photo frame. Renderings are always labelled as such. */
@@ -25,20 +23,17 @@ export function Photo({
   imgClassName = "",
   caption = false,
   preload = false,
-  reveal = false,
 }: Props) {
   const captionText = typeof caption === "string" ? caption : photo.caption;
   const img = (
     <div className={`relative overflow-hidden bg-paper-2 ${frame}`}>
-      <Image
+      <FadeImage
         src={photo.src}
         alt={photo.alt}
-        fill
         sizes={sizes}
         loading={preload ? "eager" : undefined}
         fetchPriority={preload ? "high" : undefined}
-        placeholder="blur"
-        className={`object-cover ${imgClassName}`}
+        className={imgClassName}
         style={photo.focus ? { objectPosition: photo.focus } : undefined}
       />
       {photo.rendering ? (
@@ -49,7 +44,7 @@ export function Photo({
 
   return (
     <figure className={className}>
-      {reveal ? <Reveal>{img}</Reveal> : img}
+      {img}
       {caption && captionText ? (
         <figcaption className="t-meta mt-2.5 text-muted">{captionText}</figcaption>
       ) : null}

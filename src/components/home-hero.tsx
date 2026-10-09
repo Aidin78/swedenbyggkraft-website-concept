@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { FadeImage } from "./fade-image";
 import Link from "next/link";
 
 import { buttonClass } from "./button";
@@ -17,16 +17,13 @@ export function HomeHero({ slides }: { slides: Photo[] }) {
       <div className="hero-media relative h-[62svh] min-h-[22rem] overflow-hidden bg-ink sm:h-[70svh] lg:h-[calc(100svh-4.75rem)] lg:max-h-[60rem] lg:min-h-[40rem]">
         {slides.map((photo, i) => (
           <div key={photo.alt} className="hero-slide absolute inset-0">
-            <Image
+            <FadeImage
               src={photo.src}
               alt={i === 0 ? photo.alt : ""}
-              fill
               sizes="100vw"
-              loading={i === 0 ? "eager" : undefined}
-              fetchPriority={i === 0 ? "high" : undefined}
-              placeholder="blur"
-              quality={75}
-              className="object-cover"
+              loading={i === 0 ? "eager" : "lazy"}
+              // The first photo is the largest paint; the others can wait.
+              fetchPriority={i === 0 ? "high" : "low"}
               style={photo.focus ? { objectPosition: photo.focus } : undefined}
             />
           </div>

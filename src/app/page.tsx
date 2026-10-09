@@ -70,7 +70,6 @@ export default function HomePage() {
               frame="aspect-[4/5]"
               sizes="(min-width: 1024px) 30vw, (min-width: 640px) 60vw, 100vw"
               caption
-              reveal
             />
           </div>
         </div>
@@ -173,7 +172,6 @@ export default function HomePage() {
               className="mt-14 hidden lg:block"
               sizes="(min-width: 1024px) 38vw, 100vw"
               caption
-              reveal
             />
           </div>
           <ul className="col-span-12 border-t border-ink lg:col-span-6 lg:col-start-7">

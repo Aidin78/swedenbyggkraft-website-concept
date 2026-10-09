@@ -24,7 +24,6 @@ export function SiteHeader({ nav, services, quoteHref, phone, email }: Props) {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const hoverTimer = useRef<number | undefined>(undefined);
@@ -38,22 +37,9 @@ export function SiteHeader({ nav, services, quoteHref, phone, email }: Props) {
     setMobileOpen(false);
   }
 
-  // Solid edge once scrolled; tuck away while scrolling down, return on scroll up.
+  // The header stays put; once the page scrolls it only gains a bottom edge.
   useEffect(() => {
-    let last = window.scrollY;
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const y = window.scrollY;
-        setScrolled(y > 8);
-        setHidden(y > 240 && y > last + 4);
-        if (y < last - 4 || y < 240) setHidden(false);
-        last = y;
-        ticking = false;
-      });
-    };
+    const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -110,11 +96,9 @@ export function SiteHeader({ nav, services, quoteHref, phone, email }: Props) {
             setMobileOpen(false);
           }
         }}
-        className={[
-          "sticky top-0 z-50 bg-paper transition-[transform,box-shadow] duration-500 ease-out-quart",
-          scrolled ? "shadow-[0_1px_0_var(--color-line)]" : "",
-          hidden && !mobileOpen && !openMenu ? "-translate-y-full" : "translate-y-0",
-        ].join(" ")}
+        className={`sticky top-0 z-50 bg-paper transition-shadow duration-300 ${
+          scrolled ? "shadow-[0_1px_0_var(--color-line)]" : ""
+        }`}
       >
         <div className="wrap flex h-16 items-center justify-between gap-6 lg:h-[4.75rem]">
           <Link href="/" className="relative z-10 -m-1 p-1" aria-label="Sweden Bygg Kraft – till startsidan">
@@ -205,7 +189,7 @@ export function SiteHeader({ nav, services, quoteHref, phone, email }: Props) {
         </div>
 
       </header>
-      {/* Outside the header: its transform would otherwise trap this fixed panel. */}
+      {/* Outside the sticky header so the fixed panel is positioned against the viewport. */}
       <MobileMenu
         open={mobileOpen}
         nav={nav}
