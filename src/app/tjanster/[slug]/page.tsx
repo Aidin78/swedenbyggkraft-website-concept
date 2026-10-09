@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { Breadcrumbs } from "@/components/page-intro";
 import { Photo } from "@/components/photo";
 import { ProjectCard } from "@/components/project-card";
 import { CtaBand } from "@/components/cta-band";
-import { DetailSkeleton } from "@/components/detail-skeleton";
 import { buttonClass } from "@/components/button";
 import { JsonLd } from "@/components/json-ld";
 import { constructionServices, getService } from "@/content/services";
@@ -30,15 +28,11 @@ export async function generateMetadata({ params }: PageProps<"/tjanster/[slug]">
   };
 }
 
-export default function ServicePage({ params }: PageProps<"/tjanster/[slug]">) {
-  return (
-    <Suspense fallback={<DetailSkeleton />}>
-      <ServiceContent params={params} />
-    </Suspense>
-  );
-}
+// Every slug is prerendered from generateStaticParams, so the page may resolve
+// params up front: navigation shows the finished page instead of a skeleton.
+export const instant = false;
 
-async function ServiceContent({ params }: { params: PageProps<"/tjanster/[slug]">["params"] }) {
+export default async function ServicePage({ params }: PageProps<"/tjanster/[slug]">) {
   const { slug } = await params;
   const service = getService(slug);
   if (!service) notFound();

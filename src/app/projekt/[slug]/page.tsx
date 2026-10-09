@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
 import { Breadcrumbs } from "@/components/page-intro";
 import { Photo } from "@/components/photo";
 import { ProjectCard } from "@/components/project-card";
 import { DimensionLine } from "@/components/dimension-figure";
 import { CtaBand } from "@/components/cta-band";
-import { DetailSkeleton } from "@/components/detail-skeleton";
 import { getProject, projects } from "@/content/projects";
 import { constructionServices } from "@/content/services";
 
@@ -27,15 +25,11 @@ export async function generateMetadata({ params }: PageProps<"/projekt/[slug]">)
   };
 }
 
-export default function ProjectPage({ params }: PageProps<"/projekt/[slug]">) {
-  return (
-    <Suspense fallback={<DetailSkeleton />}>
-      <ProjectContent params={params} />
-    </Suspense>
-  );
-}
+// Every slug is prerendered from generateStaticParams, so the page may resolve
+// params up front: navigation shows the finished page instead of a skeleton.
+export const instant = false;
 
-async function ProjectContent({ params }: { params: PageProps<"/projekt/[slug]">["params"] }) {
+export default async function ProjectPage({ params }: PageProps<"/projekt/[slug]">) {
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) notFound();
@@ -135,7 +129,7 @@ async function ProjectContent({ params }: { params: PageProps<"/projekt/[slug]">
         </div>
       </section>
 
-      <section aria-labelledby="oversikt" className="wrap py-16 sm:py-24">
+      <section aria-labelledby="oversikt" className={`wrap pt-16 sm:pt-24 ${project.figures ? "pb-16 sm:pb-24" : ""}`}>
         <div className="grid-12 gap-y-12">
           <div className="col-span-12 lg:col-span-7">
             <h2 id="oversikt" className="sr-only">
@@ -165,14 +159,19 @@ async function ProjectContent({ params }: { params: PageProps<"/projekt/[slug]">
                   {f.value}
                   <span className="ml-[0.08em] text-[0.32em] tracking-normal">{f.unit}</span>
                 </p>
-                <DimensionLine label={f.label} className="mt-10 text-paper/70" />
+                {/* Only lengths get a dimension line; other figures get a plain label. */}
+                {f.unit === "m" ? (
+                  <DimensionLine label={f.label} className="mt-10 text-paper/70" />
+                ) : (
+                  <p className="t-meta mt-4 border-t border-paper/40 pt-3 text-paper/70">{f.label}</p>
+                )}
               </div>
             ))}
           </div>
         </section>
       ) : null}
 
-      <section aria-labelledby="bilder" className="wrap pb-16 sm:pb-24">
+      <section aria-labelledby="bilder" className="wrap pb-16 pt-16 sm:pb-24 sm:pt-24">
         <h2 id="bilder" className="t-h2 border-t border-ink pt-8">
           Bilder
         </h2>

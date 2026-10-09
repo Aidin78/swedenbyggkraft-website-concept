@@ -42,7 +42,7 @@ export function HomeHero({ slides }: { slides: Photo[] }) {
                 className="hero-caption t-meta absolute inset-x-0 top-0 flex items-center justify-end gap-3 text-paper"
               >
                 <span className="h-px w-10 bg-paper/70" />
-                {photo.caption}
+                <span className="bg-ink/75 px-2 py-1">{photo.caption}</span>
               </p>
             ))}
           </div>

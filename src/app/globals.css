@@ -98,7 +98,7 @@
   }
 
   .t-hero {
-    font-size: clamp(2.75rem, 6.2vw, 7rem);
+    font-size: clamp(2.75rem, 5.6vw, 6.5rem);
     font-weight: 780;
     font-variation-settings: "wdth" 116;
     line-height: 0.9;
